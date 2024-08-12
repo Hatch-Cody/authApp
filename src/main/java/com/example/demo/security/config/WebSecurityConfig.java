@@ -24,13 +24,14 @@ public class WebSecurityConfig {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v*/registration/**").permitAll()
-                        .requestMatchers("/api/v*/profile/**").authenticated()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/api/v*/registration/**", "/api/v*/password-reset/**")
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(Customizer.withDefaults())
