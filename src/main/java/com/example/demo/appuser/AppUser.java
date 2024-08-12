@@ -38,6 +38,7 @@ public class AppUser implements UserDetails {
     private AppUserRole appUserRole;
     private Boolean locked = false;
     private Boolean enabled = false;
+    private String profilePictureUrl;
 
     public AppUser(String fname, String lname, String email, String password, AppUserRole appUserRole) {
         this.fname = fname;

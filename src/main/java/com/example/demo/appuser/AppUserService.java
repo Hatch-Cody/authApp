@@ -70,4 +70,20 @@ public class AppUserService implements UserDetailsService {
     public int enableAppUser(String email) {
         return appUserRepository.enableAppUser(email);
     }
+
+    public boolean updateUserProfile(String email, String firstName, String lastName, String profilePictureUrl) {
+        int result = appUserRepository.updateUserProfile(email, firstName, lastName, profilePictureUrl);
+        return result > 0;
+    }
+
+    public boolean updateUserPassword(String email, String newPassword) {
+        String encodedPassword = bCryptPasswordEncoder.encode(newPassword);
+        int result = appUserRepository.updateUserPassword(email, encodedPassword);
+        return result > 0;
+    }
+
+    public AppUser getUserProfile(String email) {
+        return appUserRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email)));
+    }
 }

@@ -20,4 +20,14 @@ public interface AppUserRepository extends JpaRepository<AppUser, Long> {
             "SET a.enabled = TRUE WHERE a.email = ?1")
     int enableAppUser(String email);
 
+    @Transactional
+    @Modifying
+    @Query("UPDATE AppUser a SET a.fname = ?2, a.lname = ?3, a.profilePictureUrl = ?4 WHERE a.email = ?1")
+    int updateUserProfile(String email, String firstName, String lastName, String profilePictureUrl);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE AppUser a SET a.password = ?2 WHERE a.email = ?1")
+    int updateUserPassword(String email, String newPassword);
+
 }
